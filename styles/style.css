@@ -931,13 +931,19 @@ footer.footer .footer-contents {
 
 .cm #cm-1 {
     position: absolute;
-    width: 20%;
+    width: 30%;
     height: 100%;
     background-color: #000;
 }
 .cm #cm-2 {
     position: absolute;
-    width: 80%;
+    width: 90%;
+    height: 100%;
+    background-color:  #000;
+}
+.cm #cm-3 {
+    position: absolute;
+    width: 100%;
     height: 100%;
     background-color:  #000;
 }
