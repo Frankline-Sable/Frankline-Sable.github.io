@@ -20,6 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6fa405d9-4e0f-408f-9dd0-971799e60bc3" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -50,11 +51,12 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../wamp64/www/projects/Frankline-Sable.github.io/images" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\wamp64\www\projects\Frankline-Sable.github.io\images" />
       <recent name="C:\Users\Frankline Sable\PhpstormProjects\Frankline-Sable.github.io2\images" />
       <recent name="C:\Users\Frankline Sable\PhpstormProjects\Frankline-Sable.github.io2\.idea" />
       <recent name="C:\Users\Frankline Sable\PhpstormProjects\Frankline-Sable.github.io2\images\projects\Design" />
@@ -83,7 +85,7 @@
       <workItem from="1612461325130" duration="1111000" />
       <workItem from="1612500654368" duration="216000" />
       <workItem from="1612511727464" duration="4130000" />
-      <workItem from="1612583018007" duration="3193000" />
+      <workItem from="1612583018007" duration="5311000" />
     </task>
     <servers />
   </component>
