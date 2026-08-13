@@ -16,7 +16,7 @@
     <meta name="title" content="Frankline Odero — Senior Software Engineer">
     <meta name="description"
           content="Senior Full-Stack Software Engineer based in Nairobi, Kenya. 5+ years building production Flutter, web, and backend systems across fintech, health-tech, and agri-tech, used by 100,000+ people.">
-    <meta name=”robots” content="index, follow">
+    <meta name="robots" content="index, follow">
 
     <meta name="title" property="og:title" content="Frankline Odero — Senior Software Engineer"/>
     <meta property="og:type" content="Website"/>
@@ -605,7 +605,7 @@
                                     I’m always able to articulate people’s needs, whether it be clients or my teammates.
                                 </p>-->
                                 <p>
-                                    I'm a Senior Full-Stack Software Engineer with 5+ years of experience in cross-platform mobile and web development. I lead Flutter and platform architecture at ITalanta / Elewa, and independently build two of my own production apps — Pesa Radar (fintech) and Smart Running (health-tech) — end to end. Passionate about resilient systems and mentoring engineers. Let’s connect! 🚀
+                                    I'm a Senior Full-Stack Software Engineer with 5+ years of experience in cross-platform mobile and web development. I lead Flutter and platform architecture at ITalanta / Elewa — including Farmbetter (agri-tech) — and within a team worked on Smartrunning (health-tech) end to end. Passionate about resilient systems and mentoring engineers. Let’s connect! 🚀
                                  </p>
                     
 
@@ -665,6 +665,11 @@
                                                 </li>
                                             </ul>
                                         </article>
+                        
+                                    </div>
+                                </div>
+                                <div class="pure-u-12-24 pure-u-6-24 ">
+                                    <div class="">
                                         <article class="">
                                             <span><b>Techxers Kenya Ltd</b></span><br>
                                             <span><i><b>Full-Stack Engineer</b></i></span><br>
@@ -677,10 +682,6 @@
                                                 </li>
                                             </ul>
                                         </article>
-                                    </div>
-                                </div>
-                                <div class="pure-u-12-24 pure-u-6-24 ">
-                                    <div class="">
                                         <article class="">
                                             <span><b>Creators Galaxy Inc</b></span><br>
                                             <span><i><b>Co-Founder &amp; Lead Developer</b></i></span><br>
@@ -3218,15 +3219,7 @@ Schooling doesn't assure employment but skill does.
                              data-animation="fadeInRight">
                             <div role="form" class="wpcf7" id="wpcf7-f1322-o1" lang="en-US" dir="ltr">
                                 <div class="screen-reader-response"></div>
-                                <form action="#wpcf7-f1322-o1" method="post"
-                                      class="wpcf7-form" novalidate="novalidate">
-                                    <div style="display: none;">
-                                        <input type="hidden" name="_wpcf7" value="1322"/>
-                                        <input type="hidden" name="_wpcf7_version" value="5.0.5"/>
-                                        <input type="hidden" name="_wpcf7_locale" value="en_US"/>
-                                        <input type="hidden" name="_wpcf7_unit_tag" value="wpcf7-f1322-o1"/>
-                                        <input type="hidden" name="_wpcf7_container_post" value="0"/>
-                                    </div>
+                                <form id="contact-mailto-form" class="wpcf7-form">
                                     <div><input type="hidden" name="your-subject" value="Contact Form"></div>
                                     <div class="pure-g contact-form-content">
                                         <div class="pure-u-1 pure-u-sm-12-24"><span
@@ -3234,8 +3227,7 @@ Schooling doesn't assure employment but skill does.
                                                                                                  name="your-name"
                                                                                                  value="" size="40"
                                                                                                  class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required"
-                                                                                                 aria-required="true"
-                                                                                                 aria-invalid="false"
+                                                                                                 required
                                                                                                  placeholder="Name"/></span>
                                         </div>
                                         <div class="pure-u-1 pure-u-sm-12-24"><span
@@ -3243,22 +3235,47 @@ Schooling doesn't assure employment but skill does.
                                                                                                   name="your-email"
                                                                                                   value="" size="40"
                                                                                                   class="wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email"
-                                                                                                  aria-required="true"
-                                                                                                  aria-invalid="false"
+                                                                                                  required
                                                                                                   placeholder="Email"/></span>
                                         </div>
                                         <div class="pure-u-1"><span
                                                 class="wpcf7-form-control-wrap your-message"><textarea
                                                 name="your-message" cols="40" rows="10"
-                                                class="wpcf7-form-control wpcf7-textarea" aria-invalid="false"
+                                                class="wpcf7-form-control wpcf7-textarea" required
                                                 placeholder="Message"></textarea></span></div>
                                         <div class="pure-u-1"><input type="submit" value="Send"
                                                                      class="wpcf7-form-control wpcf7-submit button"/>
                                         </div>
                                     </div>
-                                    <div class="wpcf7-response-output wpcf7-display-none"></div>
+                                    <div class="wpcf7-response-output" style="display:none;"></div>
                                 </form>
                             </div>
+                            <script>
+                                (function () {
+                                    var form = document.getElementById('contact-mailto-form');
+                                    if (!form) return;
+                                    var status = form.querySelector('.wpcf7-response-output');
+                                    form.addEventListener('submit', function (e) {
+                                        e.preventDefault();
+                                        var name = form.querySelector('[name="your-name"]').value.trim();
+                                        var email = form.querySelector('[name="your-email"]').value.trim();
+                                        var message = form.querySelector('[name="your-message"]').value.trim();
+                                        if (!name || !email || !message) {
+                                            status.style.display = 'block';
+                                            status.textContent = 'Please fill in all fields.';
+                                            return;
+                                        }
+                                        var subject = 'Portfolio contact from ' + name;
+                                        var body = message + '\n\n— ' + name + ' (' + email + ')';
+                                        var mailto = 'mailto:franklineodero@gmail.com'
+                                            + '?subject=' + encodeURIComponent(subject)
+                                            + '&body=' + encodeURIComponent(body);
+                                        window.location.href = mailto;
+                                        status.style.display = 'block';
+                                        status.textContent = 'Opening your email app to send this…';
+                                    });
+                                })();
+                            </script>
                         </div>
                         <div class="layers-widget-skrollex-section-55e8d6e813a15761004876 pure-u-1 pure-u-lg-24-24  col-padding">
                             <p class="text-center">
@@ -3332,7 +3349,7 @@ Schooling doesn't assure employment but skill does.
                                             </a></li>
 
                                             <li><span>Additional Phone numbers </span><br/>
-                                                <a href="tel:+254716843583" target="_blank">+(254) 774807849</a> 
+                                                <a href="tel:+254716843583" target="_blank">+(254) 100311314</a> 
                                                 <!--
 
                                                     <br>
