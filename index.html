@@ -3,12 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Frankline Odero — Senior Software Engineer</title>
-<meta name="description" content="Frankline Odero — Senior Full-Stack Software Engineer based in Nairobi, Kenya. Flutter, mobile architecture, and cloud systems across fintech, health-tech, and agri-tech.">
-<meta name="keywords" content="Frankline Odero, Frankline Sable, software engineer, Flutter developer, Nairobi Kenya, mobile engineer, fintech, full-stack developer">
-<meta property="og:title" content="Frankline Odero — Senior Software Engineer">
-<meta property="og:description" content="Flutter, mobile architecture, and cloud systems across fintech, health-tech, and agri-tech. Based in Nairobi, Kenya.">
+<title>Frankline Odero | Software Engineer — Backend & Full-Stack</title>
+<meta name="description" content="Frankline Odero is a software engineer in Nairobi, Kenya, building backend, full-stack and cloud-native systems across fintech, health-tech and agri-tech.">
+<meta name="keywords" content="Frankline Odero, Frankline Sable, software engineer, backend engineer, full-stack developer, cloud systems, Nairobi Kenya, FastAPI, Python, Flutter">
+<meta property="og:title" content="Frankline Odero | Software Engineer — Backend & Full-Stack">
+<meta property="og:description" content="Backend, full-stack and cloud-native engineering across fintech, health-tech and agri-tech. Based in Nairobi, Kenya.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://frankline-sablegithubio.vercel.app/">
+<meta name="theme-color" content="#0A2C44">
+<meta name="color-scheme" content="light">
+<link rel="canonical" href="https://frankline-sablegithubio.vercel.app/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -32,7 +36,10 @@
   }
 
   *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
-  html{ scroll-behavior:smooth; }
+  html{ scroll-behavior:smooth; scroll-padding-top:72px; }
+  :focus-visible{ outline:3px solid var(--accent); outline-offset:4px; }
+  .skip-link{position:fixed;top:-70px;left:16px;z-index:999;background:var(--accent);color:var(--navy-deep2);padding:10px 16px;font-weight:700;}
+  .skip-link:focus{top:12px;}
   body{
     font-family:var(--font-sans);
     background:var(--paper);
@@ -77,6 +84,8 @@
   .rail-foot{ font-family:var(--font-mono); font-size:10px; color:var(--navy-text-muted); text-align:center; line-height:1.6; }
 
   .rail-toggle{ display:none; }
+  .rail-nav a:hover{color:#fff;}
+  .btn:focus-visible,.rail-nav a:focus-visible{outline-color:var(--accent);}
 
   @media (max-width:860px){
     .rail{
@@ -295,13 +304,16 @@
   }
   .to-top.show{ opacity:1; pointer-events:auto; }
   .to-top:hover{ transform:translateY(-3px); }
+  @media(max-width:600px){.wrap{padding:0 22px}.hero{padding:74px 0 65px;min-height:auto}.hero-grid{gap:18px}.hero h1{font-size:clamp(36px,10vw,52px)}.hero-diagram{max-width:370px;margin:auto}.about,.experience,.domains,.skills{padding:78px 0}.contact{padding:78px 0 34px}.stat-row{gap:20px 28px}.stat b{font-size:23px}.now-card li{flex-wrap:wrap}.title-block{gap:18px}.to-top{right:16px;bottom:16px}}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#home">Skip to content</a>
 
-<nav class="rail">
+<nav class="rail" aria-label="Primary navigation">
   <div class="rail-mark"><span></span>F.O — REV 2026</div>
-  <button class="rail-toggle" id="railToggle" aria-label="Toggle navigation">
+  <button class="rail-toggle" id="railToggle" aria-label="Toggle navigation" aria-controls="railNav" aria-expanded="false">
     <span></span><span></span><span></span>
   </button>
   <div class="rail-nav" id="railNav">
@@ -322,11 +334,11 @@
     <div class="wrap hero-grid">
       <div>
         <div class="eyebrow on-dark">Portfolio — Field Notes</div>
-        <h1>Frankline Odero<br><span class="accent">builds systems</span> that sync.</h1>
+        <h1>Frankline Odero<br><span class="accent">builds software</span> that lasts.</h1>
         <p class="hero-sub">
-          Senior Full-Stack Software Engineer based in Nairobi, Kenya —
-          <b>Flutter &amp; mobile architecture, cloud infrastructure, and resilient data pipelines</b>
-          across fintech, health-tech, and agri-tech products used by 100,000+ people.
+          Software Engineer based in Nairobi, Kenya, working across
+          <b>backend services, full-stack applications, cloud infrastructure and mobile platforms</b>.
+          I've contributed to products reaching 100,000+ users across fintech, health-tech and agri-tech.
         </p>
         <div class="btn-row">
           <a href="#work" class="btn btn-primary">View Selected Work →</a>
@@ -335,12 +347,12 @@
         <div class="stat-row">
           <div class="stat"><b>5+</b><span>Years Experience</span></div>
           <div class="stat"><b>100K+</b><span>Users Served</span></div>
-          <div class="stat"><b>4</b><span>Shipped Products</span></div>
+          <div class="stat"><b>4+</b><span>Products Contributed To</span></div>
           <div class="stat"><b>3</b><span>Domains — Fintech / Health / Agri</span></div>
         </div>
       </div>
 
-      <div class="hero-diagram reveal" id="heroDiagram">
+      <div class="hero-diagram reveal" id="heroDiagram" role="img" aria-label="Illustrative diagram showing a mobile application connected to offline storage, Firestore, wearable APIs and secure backup">
         <svg viewBox="0 0 460 420" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <!-- corner marks -->
           <path d="M8 8h18M8 8v18" class="diagram-line" stroke-width="1"/>
@@ -395,19 +407,18 @@
         <div class="eyebrow on-light">01 / About</div>
         <h2>Systems-minded, product-focused.</h2>
         <p>
-          I'm a <b>Senior Full-Stack Software Engineer</b> with 5+ years building production mobile, web,
-          and backend systems — currently leading Flutter and platform architecture at
-          <b>ITalanta / Elewa</b> in Nairobi.
+          I'm a <b>Software Engineer</b> with experience building production backend, web and mobile systems. At
+          <b>ITalanta / Elewa</b>, I work across application architecture, APIs, cloud integrations and engineering delivery.
         </p>
         <p>
-          My work sits where <b>mobile architecture meets resilient backend systems</b>: clean, testable
-          codebases; data pipelines that stay correct under load; and integrations — wearables, banking SMS,
-          NFC hardware — that most engineers avoid because the edge cases are brutal. I like the edge cases.
+          I enjoy the engineering problems behind dependable products: <b>clear service boundaries,
+          maintainable code, reliable data pipelines and thoughtful integrations</b>. My experience spans
+          wearable platforms, financial transaction parsing and NFC-enabled systems.
         </p>
         <p>
-          Outside of ITalanta, I build and maintain two of my own production apps —
-          <b>Pesa Radar</b> (personal finance) and <b>Smart Running</b> (marathon training) — end to end,
-          from architecture through App Store release.
+          Outside work, I build independent projects including <b>Pesa Radar</b>, an offline-first
+          personal finance app. I also write about software architecture, engineering decisions and
+          lessons from building real products.
         </p>
       </div>
       <div class="reveal">
@@ -416,9 +427,9 @@
           <ul>
             <li><span>Role</span> <b>Senior Full-Stack Engineer</b></li>
             <li><span>Company</span> <b>ITalanta / Elewa</b></li>
-            <li><span>Focus</span> <b>Flutter · Clean Architecture</b></li>
+            <li><span>Focus</span> <b>Backend · Full-Stack · Cloud</b></li>
             <li><span>Based in</span> <b>Nairobi, Kenya</b></li>
-            <li><span>Open to</span> <b>Senior / Staff Mobile roles</b></li>
+            <li><span>Interests</span> <b>Backend · Full-Stack Engineering</b></li>
           </ul>
         </div>
       </div>
@@ -437,10 +448,9 @@
           <div class="tl-meta">Jan 2022 — Present · Nairobi, Kenya</div>
           <h3>Senior Full-Stack Engineer <span>— ITalanta / Elewa</span></h3>
           <p>
-            Architect and scale multi-platform Flutter applications serving 100,000+ active users, owning
-            delivery end to end from system design through App Store and Google Play release. Engineer
-            resilient backend integrations — including wearable data pipelines on the Terra V2 API — and lead
-            code review and mentorship for the mobile team.
+            Build and maintain production mobile and backend systems across health-tech and agri-tech.
+            Work with Flutter, Python/FastAPI, Firebase and GCP data pipelines; integrate wearable platforms,
+            support app releases, review code and mentor developers.
           </p>
         </div>
         <div class="tl-item">
@@ -477,10 +487,10 @@
     <div class="wrap">
       <div class="reveal">
         <div class="eyebrow on-dark">03 / Selected Work</div>
-        <h2>Three domains, one architecture instinct.</h2>
+        <h2>Different domains. The same engineering mindset.</h2>
         <p class="domains-intro">
-          The products I've built span fintech, health-tech, and agri-tech — but the underlying problem is
-          always the same: keep data correct and available when the network isn't.
+          From offline-first finance tools to wearable integrations and agricultural platforms,
+          my work focuses on building dependable software around real-world constraints.
         </p>
       </div>
 
@@ -488,7 +498,7 @@
         <div class="domain-card">
           <div class="domain-tag">Fintech</div>
           <h3>Pesa Radar</h3>
-          <div class="domain-co">Personal finance app · Independent</div>
+          <div class="domain-co">Personal finance · Independent project</div>
           <ul>
             <li>Offline-first architecture (domain/application/infrastructure layers) with Firestore sync and Hive local storage.</li>
             <li>Encrypted, checksum-verified (SHA-256) cloud backup with chunked Firestore writes for large payloads.</li>
@@ -502,21 +512,21 @@
         <div class="domain-card">
           <div class="domain-tag">Health-Tech</div>
           <h3>Smart Running</h3>
-          <div class="domain-co">Marathon training app · Independent</div>
+          <div class="domain-co">Running and wearable platform · Elewa</div>
           <ul>
-            <li>Multi-step onboarding system (Flutter, BLoC, go_router) for signup, editing, and activity-based upgrades.</li>
-            <li>Wearable sync architecture on the Terra V2 API and Health package, feeding personalized training profiles.</li>
-            <li>Managed App Store / Play Store compliance, including iOS Info.plist permissions and sync-flow restructuring.</li>
+            <li>Developed runner onboarding, training calendars and activity insights in Flutter.</li>
+            <li>Integrated wearable activity data and training-plan delivery with Python/FastAPI backend services.</li>
+            <li>Supported release readiness, permissions, and reliability improvements across iOS and Android.</li>
           </ul>
           <div class="chip-row">
-            <span class="chip">Flutter</span><span class="chip">Terra API</span><span class="chip">Health Kit</span><span class="chip">FastAPI</span>
+            <span class="chip">Flutter</span><span class="chip">Terra API</span><span class="chip">GCP</span><span class="chip">FastAPI</span>
           </div>
         </div>
 
         <div class="domain-card">
           <div class="domain-tag">Agri-Tech</div>
-          <h3>Farmbetter</h3>
-          <div class="domain-co">ITalanta Elewa · Mobile Lead</div>
+          <h3>FarmBetter</h3>
+          <div class="domain-co">Elewa · Engineering team</div>
           <ul>
             <li>Multi-platform agri-tech solution serving 100,000+ farmers and extension agents across 10+ countries.</li>
             <li>Flutter mobile app, Angular web app, and a shared GraphQL/Firebase backend.</li>
@@ -558,7 +568,7 @@
         </div>
         <div class="spec-row">
           <div class="spec-label">Backend &amp; Cloud</div>
-          <div class="spec-value"><span>Node.js</span><span>FastAPI</span><span>Laravel</span><span>GraphQL</span><span>RESTful APIs</span><span>Firebase</span></div>
+          <div class="spec-value"><span>Python / FastAPI</span><span>Node.js</span><span>Laravel</span><span>GraphQL</span><span>REST APIs</span><span>Firebase</span></div>
         </div>
         <div class="spec-row">
           <div class="spec-label">Databases</div>
@@ -570,7 +580,7 @@
         </div>
         <div class="spec-row">
           <div class="spec-label">Architecture &amp; Ops</div>
-          <div class="spec-value"><span>Clean Architecture</span><span>System Design</span><span>Dependency Injection</span><span>Agile/Scrum</span><span>Docker</span><span>Git</span><span>Terraform</span></div>
+          <div class="spec-value"><span>Clean Architecture</span><span>System Design</span><span>CI/CD</span><span>Docker</span><span>Git</span><span>Terraform</span><span>GCP</span><span>Apache Beam / Dataflow</span><span>BigQuery</span></div>
         </div>
       </div>
     </div>
@@ -582,7 +592,7 @@
       <div class="contact-head reveal">
         <div class="eyebrow on-dark">05 / Contact</div>
         <h2>Let's build something that stays up.</h2>
-        <p>Open to senior and staff-level mobile / full-stack roles. Based in Nairobi, Kenya — happy to work remote or hybrid.</p>
+        <p>Interested in backend, full-stack and cloud engineering opportunities. Based in Nairobi, Kenya, and open to remote roles and relocation opportunities.</p>
       </div>
       <div class="contact-links reveal">
         <a href="mailto:franklineodero@gmail.com" class="btn btn-primary">franklineodero@gmail.com</a>
@@ -601,15 +611,15 @@
 
 </div>
 
-<div class="to-top" id="toTop">↑</div>
+<button type="button" class="to-top" id="toTop" aria-label="Back to top">↑</button>
 
 <script>
   // Mobile nav toggle
   const railToggle = document.getElementById('railToggle');
   const railNav = document.getElementById('railNav');
   if (railToggle) {
-    railToggle.addEventListener('click', () => railNav.classList.toggle('open'));
-    railNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => railNav.classList.remove('open')));
+    railToggle.addEventListener('click', () => { const open = railNav.classList.toggle('open'); railToggle.setAttribute('aria-expanded', String(open)); });
+    railNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => { railNav.classList.remove('open'); railToggle.setAttribute('aria-expanded', 'false'); }));
   }
 
   // Scroll reveal
@@ -634,9 +644,10 @@
   }, { threshold: 0.4, rootMargin: '-10% 0px -60% 0px' });
   sections.forEach(s => { if (s) navIo.observe(s); });
 
-  // Hero diagram line-draw on load
+  // Hero diagram line-draw on load (skip for reduced-motion preference)
   window.addEventListener('load', () => {
-    document.querySelectorAll('#heroDiagram .diagram-line').forEach((path, i) => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { document.getElementById('heroDiagram')?.classList.add('in'); return; }
+    document.querySelectorAll('#heroDiagram .diagram-line:not(.diagram-line-dash)').forEach((path, i) => {
       const len = path.getTotalLength ? path.getTotalLength() : 200;
       path.style.strokeDasharray = len;
       path.style.strokeDashoffset = len;
@@ -652,7 +663,7 @@
   window.addEventListener('scroll', () => {
     toTop.classList.toggle('show', window.scrollY > 700);
   });
-  toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }));
 </script>
 
 </body>
