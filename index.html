@@ -167,6 +167,33 @@ section.block{padding:118px 0;position:relative}
 .term-body p.o{color:#9fc2da;margin-bottom:14px;padding-left:18px}
 .term-body .p{color:var(--amber);margin-right:10px}
 .term.in .term-body p{animation:lineIn .45s ease forwards;animation-delay:calc(var(--n)*320ms + 200ms)}
+.term-body{max-height:min(470px,72vh);overflow-y:auto;scrollbar-width:thin;scrollbar-color:#2c4a60 transparent;cursor:text}
+.term-body .hint{color:#7ea0b3}
+.term-out{display:block}
+.t-line{color:#e9f3f9;font-size:14px;line-height:1.55;padding:1px 0;white-space:pre-wrap;overflow-wrap:anywhere;opacity:0;animation:lineIn .3s ease forwards}
+.t-line.cmd .p{color:var(--amber);margin-right:10px}
+.t-line.res{color:#9fc2da;padding-left:18px}
+.t-line.res b{color:#fff;font-weight:500}
+.t-line.res .k{color:var(--amber)}
+.t-line.res .d{color:#7ea0b3}
+.t-line.res a,.t-line.res .run{color:#8fd3ff;border-bottom:1px solid rgba(143,211,255,.35);cursor:pointer;background:none;border-top:0;border-left:0;border-right:0;font:inherit;padding:0}
+.t-line.res a:hover,.t-line.res .run:hover{color:#fff;border-bottom-color:#fff}
+.t-line.err{color:#ff9d8a;padding-left:18px}
+.t-gap{height:10px}
+.term-input{display:flex;align-items:center;gap:10px;opacity:0;margin-top:2px}
+.term.in .term-input{animation:lineIn .45s ease forwards;animation-delay:3.1s}
+.term-input .p{color:var(--amber);flex:none}
+.term-input .cwd{color:var(--mist);flex:none;display:none}
+.term-input input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#fff;font:14px var(--mono);caret-color:var(--amber);padding:2px 0}
+.term-input input::placeholder{color:#7091a6}
+.term:focus-within{border-color:rgba(255,180,84,.55)}
+.term-input input:focus-visible{outline:2px solid rgba(255,180,84,.65);outline-offset:3px;border-radius:2px}
+.term-chips button:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+.term-out:empty{display:none}
+.term-chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 24px 20px}
+.term-chips button{font:12px var(--mono);color:var(--mist);background:rgba(255,255,255,.04);border:1px solid var(--edge-strong);border-radius:20px;padding:6px 12px;cursor:pointer;transition:color .2s,border-color .2s,background .2s}
+.term-chips button:hover{color:#fff;border-color:var(--amber);background:rgba(255,180,84,.08)}
+@media(max-width:700px){.term-input input{font-size:16px}.term-body{padding:20px 18px 22px}.term-chips{padding:0 18px 18px}}
 @keyframes lineIn{to{opacity:1;transform:none}}
 
 /* experience */
@@ -344,12 +371,12 @@ section.block{padding:118px 0;position:relative}
   .pkt{display:none}
   .marquee-track{animation:none}
   .marquee{overflow-x:auto}
-  .term-body p{opacity:1;transform:none}
+  .term-body p,.term-input{opacity:1;transform:none}
   .project-card{animation:none}
   .d-line.draw{stroke-dashoffset:0}
 }
 </style>
-<noscript><style>.hero h1 .w,.term-body p{opacity:1;transform:none;filter:none}.d-line.draw{stroke-dashoffset:0}.timeline-fill{display:none}.tl-item::before{background:var(--amber)}</style></noscript>
+<noscript><style>.hero h1 .w,.term-body p{opacity:1;transform:none;filter:none}.d-line.draw{stroke-dashoffset:0}.term-input,.term-chips{display:none}.timeline-fill{display:none}.tl-item::before{background:var(--amber)}</style></noscript>
 </head>
 <body>
 <a class="skip-link" href="#home">Skip to content</a>
@@ -491,7 +518,20 @@ section.block{padding:118px 0;position:relative}
         <p class="o" style="--n:5">Distributed systems · IoT · AI applications</p>
         <p style="--n:6"><span class="p">$</span>pwd</p>
         <p class="o" style="--n:7">/africa/kenya/nairobi</p>
-        <p style="--n:8"><span class="p">$</span><span class="caret" aria-hidden="true"></span></p>
+        <p class="hint" style="--n:8"><span class="p">#</span>Type “help”, or choose a command below. Use ↑ / ↓ for history and Tab to complete.</p>
+        <div class="term-out" id="termOut" role="log" aria-live="polite" aria-label="Terminal output"></div>
+        <form class="term-input" id="termForm" autocomplete="off">
+          <label class="sr" for="termInput">Terminal command</label>
+          <span class="p" aria-hidden="true">$</span>
+          <input id="termInput" type="text" spellcheck="false" autocomplete="off" autocapitalize="none" autocorrect="off" enterkeyhint="send" placeholder="try: help">
+        </form>
+      </div>
+      <div class="term-chips" id="termChips" aria-label="Quick commands">
+        <button type="button" data-cmd="help">help</button>
+        <button type="button" data-cmd="experience">experience</button>
+        <button type="button" data-cmd="projects">projects</button>
+        <button type="button" data-cmd="skills">skills</button>
+        <button type="button" data-cmd="contact">contact</button>
       </div>
     </div>
   </div>
@@ -531,7 +571,7 @@ section.block{padding:118px 0;position:relative}
 <section class="block work" id="work">
   <div class="wrap">
     <h2>Work that moved beyond the editor.</h2>
-    <p class="work-intro">A few systems I’ve helped build, and the constraints that made them interesting. Explore the illustrations and details of each project.</p>
+    <p class="work-intro">A few systems I’ve helped build, and the constraints that made them interesting. Explore the interactive illustrations and discover how each system works.</p>
 
     <div class="project-filters" role="group" aria-label="Filter projects">
       <button class="filter-btn" data-filter="all" type="button" aria-pressed="true">All work</button>
@@ -733,8 +773,7 @@ var railToggle=$('#railToggle'), railNav=$('#railNav');
 function closeNav(){railNav.classList.remove('open');railToggle.setAttribute('aria-expanded','false')}
 railToggle.addEventListener('click',function(){var o=railNav.classList.toggle('open');railToggle.setAttribute('aria-expanded',String(o))});
 $$('a',railNav).forEach(function(a){a.addEventListener('click',closeNav)});
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){closeNav();railToggle.focus()}});
-addEventListener('resize',function(){if(innerWidth>860)closeNav()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeNav()});
 
 /* ---- active nav ---- */
 var navLinks=$$('.rail-nav a');
@@ -778,7 +817,7 @@ if(fine&&!reduce){
 /* ---- hero constellation ---- */
 (function(){
   var c=$('#net'),hero=$('#home');if(!c)return;
-  var ctx=c.getContext('2d');if(!ctx)return;var w=0,h=0,nodes=[],mouse={x:-9999,y:-9999},running=false,raf=0;
+  var ctx=c.getContext('2d'),w=0,h=0,nodes=[],mouse={x:-9999,y:-9999},running=false,raf=0;
   function size(){
     var r=hero.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);
     w=r.width;h=r.height;c.width=w*dpr;c.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
@@ -866,6 +905,262 @@ if(fine&&!reduce){
 
 /* ---- terminal ---- */
 new IntersectionObserver(function(en,io){if(en[0].isIntersecting){$('#term').classList.add('in');io.disconnect()}},{threshold:.35}).observe($('#term'));
+
+(function(){
+  var term=$('#term'),body=$('.term-body',term),out=$('#termOut'),form=$('#termForm'),input=$('#termInput'),barTxt=$('.term-bar span',term);
+  var esc=function(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')};
+  var pad=function(s,n){s=String(s);while(s.length<n)s+=' ';return s};
+
+  /* ---- content (mirrors the page) ---- */
+  var LINK={
+    github:'https://github.com/Frankline-Sable',
+    linkedin:'https://linkedin.com/in/frankline-sable',
+    medium:'https://medium.com/@franklineodero',
+    email:'mailto:franklineodero@gmail.com',
+    'pesa-radar':'https://play.google.com/store/apps/details?id=com.sable.pesa_radar'
+  };
+  var JOBS=[
+    {id:'elewa',role:'Senior Full-Stack Engineer',org:'ITalanta / Elewa',when:'Jan 2022 – Present',where:'Nairobi, Kenya',
+     text:'Build and maintain production mobile and backend systems across health-tech and agri-tech. Work with Flutter, Python/FastAPI, Firebase and GCP data pipelines; integrate wearable platforms, support app releases, review code and mentor developers.'},
+    {id:'savanna',role:'Full-Stack Engineer',org:'Savanna Dot Net',when:'Sep 2021 – Jan 2022',where:'Nairobi, Kenya',
+     text:'Shipped web applications end-to-end with Laravel and PHP, and native Android apps extending the company’s platform. Integrated blockchain and fintech features, including NFT support and a trading module.'},
+    {id:'techxers',role:'Full-Stack Engineer',org:'Techxers Kenya Ltd',when:'Jan 2020 – Aug 2021',where:'Nairobi, Kenya',
+     text:'Delivered production websites and Android apps across multiple client projects using Laravel, Node.js, React and Flutter. Mentored a team of four junior developers.'},
+    {id:'creators-galaxy',role:'Co-Founder & Lead Developer',org:'Creators Galaxy Inc',when:'Nov 2019 – 2022',where:'Nairobi, Kenya',
+     text:'Built the backend engine and led development for mobile games (Anarchy, Grudge Guess) using C#, Unity and SQLite.'}
+  ];
+  var PROJ=[
+    {id:'pesa-radar',name:'Pesa Radar',tag:'Fintech · independent product',line:'Making sense of money, without giving up privacy.',
+     text:'An offline-first Android finance app turning M-PESA and banking SMS into useful financial insight, with on-device parsing and encrypted backup.',
+     stack:'Flutter · Hive · Firebase',pts:'SMS parsing engine · Offline-first architecture · Secure backup'},
+    {id:'smartrunning',name:'SmartRunning',tag:'Health tech · Elewa',line:'Making wearable data actually useful.',
+     text:'Training experiences shaped by activity data. I’ve worked on watch integrations, workout synchronization, mobile flows, and backend/cloud delivery.',
+     stack:'FastAPI · Flutter · GCP',pts:'Wearable APIs · Training plan sync · GCP pipelines'},
+    {id:'farmbetter',name:'FarmBetter',tag:'Agri tech · Elewa',line:'Technology designed for the last mile.',
+     text:'Agricultural advisory tools built for agents and farmers across 10+ countries, including workflows where connectivity cannot be taken for granted.',
+     stack:'Flutter · Angular · GraphQL',pts:'100K+ users · 10+ countries · Offline-minded delivery'},
+    {id:'myblueprint',name:'MyBlueprint',tag:'Personal development · Elewa',line:'Big ambitions. Small daily actions.',
+     text:'A personal growth platform connecting habits, goals and roadmaps, built and shipped across mobile platforms with 30,000+ users.',
+     stack:'Flutter · Node.js · Firebase',pts:'30K+ users · Habit & goal tracking · Cross-platform releases'}
+  ];
+  var SKILLS=[
+    ['Languages','Dart, Python, TypeScript, JavaScript, PHP, C#'],
+    ['Mobile & frontend','Flutter, Android SDK, React, Angular, BLoC, Responsive UI/UX'],
+    ['Backend & cloud','Python / FastAPI, Node.js, Laravel, GraphQL, REST APIs, Firebase'],
+    ['Databases','PostgreSQL, MySQL, SQLite, Firestore, Hive'],
+    ['Specialized','Terra V2 API, Health integrations, Regex parsing engines, NFC / IoT'],
+    ['Architecture & ops','Clean Architecture, System design, CI/CD, Docker, Git, Terraform, GCP, Apache Beam / Dataflow, BigQuery']
+  ];
+  var ABOUT='I’m a software engineer with experience building production backend, web and mobile systems. At ITalanta / Elewa, I work across application architecture, APIs, cloud integrations and engineering delivery.\n\nI enjoy the engineering problems behind dependable products: clear service boundaries, maintainable code, reliable data pipelines and thoughtful integrations. My experience spans wearable platforms, financial transaction parsing and NFC-enabled systems.\n\nOutside work, I build independent projects including Pesa Radar, an offline-first personal finance app. I also write about software architecture, engineering decisions and lessons from building real products.';
+  var CONTACT='email     franklineodero@gmail.com\ngithub    github.com/Frankline-Sable\nlinkedin  linkedin.com/in/frankline-sable\nmedium    medium.com/@franklineodero';
+  var ENV={USER:'frankline',NAME:'Frankline Sable',ROLE:'Senior Full-Stack Engineer',COMPANY:'ITalanta / Elewa',FOCUS:'Backend · Full-Stack · Cloud',INTERESTS:'Distributed systems · IoT · AI applications',LOCATION:'Nairobi, Kenya',STATUS:'Open to remote & relocation opportunities',HOME:'~'};
+
+  /* ---- virtual file system ---- */
+  var FS={
+    'about.txt':ABOUT,
+    'focus.txt':ENV.FOCUS,
+    'interests.txt':ENV.INTERESTS,
+    'skills.txt':SKILLS.map(function(s){return pad(s[0],20)+s[1]}).join('\n'),
+    'contact.txt':CONTACT,
+    experience:{},
+    projects:{}
+  };
+  JOBS.forEach(function(j){FS.experience[j.id+'.txt']=j.role+' · '+j.org+'\n'+j.when+' · '+j.where+'\n\n'+j.text});
+  PROJ.forEach(function(p){FS.projects[p.id+'.md']='# '+p.name+'\n'+p.tag+'\n\n'+p.line+'\n'+p.text+'\n\nStack: '+p.stack+'\nHighlights: '+p.pts+(LINK[p.id]?'\nLink: '+LINK[p.id].replace(/^https?:\/\//,''):'\nProfessional project, no public link.')});
+  var cwd=[];
+  function node(path){
+    var p=String(path||'.');
+    p=p.replace(/^\/africa\/kenya\/nairobi/,'~');
+    var parts,cur=FS,base=[];
+    if(p.charAt(0)==='~'||p.charAt(0)==='/'){p=p.replace(/^[~\/]+/,'');base=[]}else base=cwd.slice();
+    parts=base.concat(p.split('/').filter(function(x){return x&&x!=='.'}));
+    var stack=[];
+    for(var i=0;i<parts.length;i++){if(parts[i]==='..')stack.pop();else stack.push(parts[i])}
+    for(i=0;i<stack.length;i++){
+      if(cur&&typeof cur==='object'&&Object.prototype.hasOwnProperty.call(cur,stack[i]))cur=cur[stack[i]];else return undefined;
+    }
+    return {n:cur,path:stack};
+  }
+  var isDir=function(n){return n&&typeof n==='object'};
+  var cwdLabel=function(){return '~'+(cwd.length?'/'+cwd.join('/'):'')};
+  var setBar=function(){barTxt.textContent='frankline@nairobi: '+cwdLabel()};
+
+  /* ---- output ---- */
+  var seq=0;
+  function line(html,cls){var d=document.createElement('div');d.className='t-line '+(cls||'res');d.style.animationDelay=(seq++*28)+'ms';d.innerHTML=html;out.appendChild(d);return d}
+  function text(s,cls){return line(esc(s),cls)}
+  function gap(){var d=document.createElement('div');d.className='t-gap';out.appendChild(d)}
+  function echoCmd(s){var d=document.createElement('div');d.className='t-line cmd';d.style.animation='none';d.style.opacity='1';var p=document.createElement('span');p.className='p';p.textContent='$';d.appendChild(p);d.appendChild(document.createTextNode(s));out.appendChild(d)}
+  function run(cmd){return '<button type="button" class="run" data-cmd="'+esc(cmd)+'">'}
+  function toBottom(){body.scrollTop=body.scrollHeight}
+
+  /* ---- commands ---- */
+  var CMDS={
+    help:{d:'list available commands',f:function(){
+      text('Commands','res');
+      var rows=Object.keys(CMDS).map(function(k){return '  <b>'+pad(k,12)+'</b><span class="d">'+esc(CMDS[k].d)+'</span>'});
+      line(rows.join('\n'));
+      line('<span class="d">Try </span>'+run('whoami')+'whoami</button><span class="d">, </span>'+run('projects')+'projects</button><span class="d"> or </span>'+run('cat ~/projects/pesa-radar.md')+'cat projects/pesa-radar.md</button>');
+    }},
+    whoami:{d:'who is this?',f:function(){
+      line('<b>'+esc(ENV.NAME)+'</b>\n'+esc(ENV.ROLE)+', '+esc(ENV.COMPANY)+'\n'+esc(ENV.LOCATION)+'\n<span class="k">●</span> '+esc(ENV.STATUS));
+    }},
+    about:{d:'a short introduction',f:function(){text(ABOUT)}},
+    experience:{d:'work history',f:function(){
+      line(JOBS.map(function(j){return '<b>'+esc(j.role)+'</b> <span class="d">· '+esc(j.org)+'</span>\n<span class="d">'+esc(j.when)+' · '+esc(j.where)+'</span>'}).join('\n\n'));
+      line('<span class="d">Details: </span>'+run('cat ~/experience/elewa.txt')+'cat experience/elewa.txt</button>');
+    }},
+    projects:{d:'things I have built',f:function(){
+      line(PROJ.map(function(p){return '<b>'+esc(p.name)+'</b> <span class="d">· '+esc(p.tag)+'</span>\n'+esc(p.line)+'\n<span class="d">'+esc(p.stack)+'</span>'}).join('\n\n'));
+      line('<span class="d">More: </span>'+run('cat ~/projects/farmbetter.md')+'cat projects/farmbetter.md</button><span class="d"> · Pesa Radar is live: </span>'+run('open pesa-radar')+'open pesa-radar</button>');
+    }},
+    skills:{d:'tools I reach for',f:function(){
+      line(SKILLS.map(function(s){return '<span class="k">'+esc(pad(s[0],20))+'</span>'+esc(s[1])}).join('\n'));
+    }},
+    contact:{d:'how to reach me',f:function(){
+      line('<span class="k">email     </span><a href="'+LINK.email+'">franklineodero@gmail.com</a>\n'+
+           '<span class="k">github    </span><a href="'+LINK.github+'" target="_blank" rel="noopener">github.com/Frankline-Sable</a>\n'+
+           '<span class="k">linkedin  </span><a href="'+LINK.linkedin+'" target="_blank" rel="noopener">linkedin.com/in/frankline-sable</a>\n'+
+           '<span class="k">medium    </span><a href="'+LINK.medium+'" target="_blank" rel="noopener">medium.com/@franklineodero</a>');
+    }},
+    ls:{d:'list files (ls [path])',f:function(a){
+      var t=node(a[0]||'.');
+      if(!t){return text('ls: '+a[0]+': No such file or directory','err')}
+      if(!isDir(t.n)){return text(a[0],'res')}
+      var prefix='~'+(t.path.length?'/'+t.path.join('/'):'')+'/';
+      var names=Object.keys(t.n).sort(function(x,y){var dx=isDir(t.n[x]),dy=isDir(t.n[y]);return dx===dy?(x<y?-1:1):(dx?-1:1)});
+      line(names.map(function(n){
+        return isDir(t.n[n])?run('ls '+prefix+n)+'<span class="k">'+esc(n)+'/</span></button>':run('cat '+prefix+n)+esc(n)+'</button>';
+      }).join('   '));
+    }},
+    cd:{d:'change directory (cd projects, cd ..)',f:function(a){
+      var t=a[0]?node(a[0]):{n:FS,path:[]};
+      if(!t)return text('cd: '+a[0]+': No such file or directory','err');
+      if(!isDir(t.n))return text('cd: '+a[0]+': Not a directory','err');
+      cwd=t.path;setBar();
+    }},
+    pwd:{d:'print working directory',f:function(){text('/africa/kenya/nairobi'+(cwd.length?'/'+cwd.join('/'):''))}},
+    cat:{d:'read a file (cat about.txt)',f:function(a){
+      if(!a[0])return text('usage: cat <file>   (try ls)','err');
+      var t=node(a[0]);
+      if(!t)return text('cat: '+a[0]+': No such file or directory','err');
+      if(isDir(t.n))return text('cat: '+a[0]+': Is a directory','err');
+      text(t.n);
+    }},
+    open:{d:'open a link (open github | linkedin | medium | email | pesa-radar)',f:function(a){
+      var k=(a[0]||'').toLowerCase().replace(/\.md$/,'');
+      if(!k)return text('usage: open <github|linkedin|medium|email|pesa-radar>','err');
+      if(!LINK[k]){
+        var isProj=PROJ.some(function(p){return p.id===k});
+        return text(isProj?'open: '+k+' is a professional project with no public link. Try: cat projects/'+k+'.md':'open: '+k+': unknown target','err');
+      }
+      text('opening '+k+' …');
+      if(k==='email')location.href=LINK[k];else window.open(LINK[k],'_blank','noopener');
+    }},
+    goto:{d:'jump to a section (goto work)',f:function(a){
+      var map={home:'home',about:'about',experience:'experience',work:'work',projects:'work',approach:'approach',skills:'skills',contact:'contact'};
+      var id=map[(a[0]||'').toLowerCase()];
+      if(!id)return text('usage: goto <home|about|experience|work|approach|skills|contact>','err');
+      text('scrolling to '+id+' …');
+      setTimeout(function(){document.getElementById(id).scrollIntoView({behavior:reduce?'auto':'smooth'})},250);
+    }},
+    echo:{d:'print text ($INTERESTS, $LOCATION …)',f:function(a,raw){
+      var s=raw.replace(/^\s*echo\s?/i,'').replace(/^(["'])(.*)\1$/,'$2').replace(/\$\{?([A-Za-z_]+)\}?/g,function(m,k){return ENV[k.toUpperCase()]||''});
+      text(s,'res');
+    }},
+    date:{d:'current time in Nairobi',f:function(){
+      var s;try{s=new Intl.DateTimeFormat('en-GB',{timeZone:'Africa/Nairobi',weekday:'short',day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date())+' EAT'}catch(e){s=new Date().toString()}
+      text(s);
+    }},
+    history:{d:'commands you have run',f:function(){
+      if(!hist.length)return text('(empty)');
+      text(hist.map(function(h,i){return pad(i+1,4)+h}).join('\n'));
+    }},
+    clear:{d:'clear the screen',f:function(){
+      out.innerHTML='';$$('.term-body > p',term).forEach(function(p){p.style.display='none'});
+    }}
+  };
+  var OPEN_T=['github','linkedin','medium','email','pesa-radar'];
+  var GOTO_T=['home','about','experience','work','approach','skills','contact'];
+
+  /* ---- run / history ---- */
+  var hist=[],hi=0,draft='';
+  function exec(raw){
+    var trimmed=raw.trim();
+    echoCmd(raw);
+    seq=0;
+    if(!trimmed){toBottom();return}
+    if(hist[hist.length-1]!==trimmed)hist.push(trimmed);
+    hi=hist.length;
+    var parts=trimmed.split(/\s+/),name=parts[0].toLowerCase(),args=parts.slice(1);
+    try{
+      if(name==='sudo'){
+        if(args[0]==='hire-me'){
+          line('[sudo] password for recruiter: ********\n<b>Access granted.</b> Great choice. Say hello: <a href="'+LINK.email+'">franklineodero@gmail.com</a>');
+        }else text('frankline is not in the sudoers file. This incident will not be reported.','err');
+      }else if(name==='exit'||name==='logout'){
+        text('There is no exit. Try “goto contact”.','res');
+      }else if(CMDS[name]){
+        CMDS[name].f(args,trimmed);
+      }else{
+        line('<span class="k">'+esc(name)+'</span>: command not found. Type '+run('help')+'help</button> to see what works.','err');
+      }
+    }catch(e){text('error: '+e.message,'err')}
+    toBottom();
+  }
+  form.addEventListener('submit',function(e){e.preventDefault();var v=input.value;input.value='';exec(v)});
+  out.addEventListener('click',function(e){
+    var b=e.target.closest('[data-cmd]');
+    if(!b)return;
+    exec(b.getAttribute('data-cmd'));
+  });
+  $('#termChips').addEventListener('click',function(e){
+    var b=e.target.closest('[data-cmd]');if(!b)return;
+    exec(b.getAttribute('data-cmd'));
+    if(fine)input.focus({preventScroll:true});
+  });
+  term.addEventListener('click',function(e){
+    if(e.target.closest('a,button')||(window.getSelection&&String(getSelection()).length))return;
+    input.focus({preventScroll:true});
+  });
+
+  /* ---- keyboard: history, tab completion, ctrl shortcuts ---- */
+  function common(list){var p=list[0];list.forEach(function(s){while(s.indexOf(p)!==0)p=p.slice(0,-1)});return p}
+  function finish(cands,base){
+    if(!cands.length)return;
+    if(cands.length===1){input.value=base+cands[0]+(/\/$/.test(cands[0])?'':' ');return}
+    var c=common(cands);
+    if(c.length>input.value.length-base.length)input.value=base+c;
+    else{echoCmd(input.value);seq=0;line(cands.map(esc).join('   '));toBottom()}
+  }
+  function complete(){
+    var v=input.value,m=v.match(/^\s*(\S*)$/);
+    if(m){
+      var names=Object.keys(CMDS).concat(['sudo','exit']).filter(function(k){return k.indexOf(m[1].toLowerCase())===0});
+      return finish(names,'');
+    }
+    var parts=v.trim().split(/\s+/),cmd=parts[0].toLowerCase();
+    var last=/\s$/.test(v)?'':parts[parts.length-1];
+    var base=v.slice(0,v.length-last.length),cands=[];
+    if(cmd==='cat'||cmd==='cd'||cmd==='ls'){
+      var sl=last.lastIndexOf('/'),dirPart=sl>=0?last.slice(0,sl+1):'',namePart=last.slice(sl+1);
+      var t=node(dirPart||'.');
+      if(t&&isDir(t.n)){
+        cands=Object.keys(t.n).map(function(k){return isDir(t.n[k])?k+'/':k}).filter(function(n){return n.indexOf(namePart)===0}).map(function(n){return dirPart+n});
+        if(cmd==='cd')cands=cands.filter(function(n){return /\/$/.test(n)});
+      }
+    }else if(cmd==='open')cands=OPEN_T.filter(function(n){return n.indexOf(last)===0});
+    else if(cmd==='goto')cands=GOTO_T.filter(function(n){return n.indexOf(last)===0});
+    finish(cands,base);
+  }
+  input.addEventListener('keydown',function(e){
+    if(e.key==='Tab'){e.preventDefault();complete()}
+    else if(e.key==='ArrowUp'){e.preventDefault();if(hi===hist.length)draft=input.value;if(hi>0){hi--;input.value=hist[hi]}}
+    else if(e.key==='ArrowDown'){e.preventDefault();if(hi<hist.length){hi++;input.value=hi===hist.length?draft:hist[hi]}}
+    else if(e.ctrlKey&&e.key.toLowerCase()==='l'){e.preventDefault();CMDS.clear.f()}
+    else if(e.ctrlKey&&e.key.toLowerCase()==='c'){e.preventDefault();echoCmd(input.value+'^C');input.value='';toBottom()}
+  });
+})();
 
 /* ---- marquee loop (duplicate content once) ---- */
 (function(){
