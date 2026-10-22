@@ -278,6 +278,40 @@ section.block{padding:118px 0;position:relative}
 .project-link:hover{border-color:var(--amber)}
 .project-muted{color:#7ea0b3}
 
+
+/* ---------- universe: searchable project archive ---------- */
+.uni-explorer{margin:16px auto 0;border-top:1px solid var(--edge-strong);padding-top:58px}
+.uni-explorer-top{display:flex;align-items:end;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.uni-eyebrow{font:11px var(--mono);letter-spacing:.16em;color:var(--amber);margin-bottom:12px}
+.uni-explorer h3{color:#fff;font:600 clamp(24px,3vw,36px) var(--sans);letter-spacing:-.035em;line-height:1.2}
+.uni-count{font:12px var(--mono);vertical-align:middle;color:var(--amber);margin-left:12px}
+.uni-explorer-top p:not(.uni-eyebrow){max-width:700px;color:#b3cbd9;font-size:15px;margin-top:12px}
+.uni-gh-link{font:12px var(--mono);color:var(--amber);border-bottom:1px solid rgba(255,180,84,.4);padding-bottom:5px}
+.uni-explorer-controls{display:grid;gap:17px;margin:28px 0 12px}
+.uni-search-label{display:flex;align-items:center;gap:12px;padding:0 17px;background:rgba(255,255,255,.04);border:1px solid var(--edge-strong);border-radius:12px;max-width:650px;color:var(--amber);font-size:24px}
+.uni-search-label:focus-within{border-color:var(--amber)}
+.uni-search-label input{width:100%;height:48px;background:transparent;border:0;outline:0;color:#fff;font:14px var(--sans)}
+.uni-search-label input::placeholder{color:#9db8ca}
+.uni-filters{display:flex;gap:8px;flex-wrap:wrap}
+.uni-filter{border:1px solid var(--edge-strong);border-radius:100px;background:transparent;color:#c5dae7;padding:8px 14px;font:12px var(--mono);cursor:pointer}
+.uni-filter[aria-pressed="true"]{background:var(--amber);border-color:var(--amber);color:var(--ink);font-weight:600}
+.uni-filter:hover:not([aria-pressed="true"]){border-color:var(--amber);color:white}
+.uni-archive-status{font:12px var(--mono);color:var(--mist);margin:12px 0 20px}
+.uni-archive-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.uni-archive-card{display:flex;flex-direction:column;text-align:left;border:1px solid var(--edge);border-radius:13px;background:rgba(13,48,70,.68);padding:20px;min-width:0;min-height:185px;cursor:pointer;color:inherit;transition:transform .2s,border-color .2s,background .2s}
+.uni-archive-card:hover{transform:translateY(-4px);border-color:rgba(255,180,84,.65);background:rgba(21,60,85,.9)}
+.uni-archive-card:focus-visible{outline:3px solid var(--amber)}
+.uni-archive-card-top{display:flex;justify-content:space-between;gap:8px;align-items:center;color:var(--amber);font:11px var(--mono);margin-bottom:13px}
+.uni-archive-card strong{font-size:17px;color:#fff;line-height:1.3}
+.uni-archive-card p{font-size:13px;color:#b3cbd9;margin:8px 0 15px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.uni-archive-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.uni-archive-tags span{border:1px solid var(--edge-strong);border-radius:20px;padding:3px 8px;font:10px var(--mono);color:#c7dce8}
+.uni-archive-foot{display:flex;gap:18px;justify-content:space-between;align-items:center;margin-top:22px;flex-wrap:wrap;font:11px var(--mono);color:var(--mist)}
+.uni-more{border:1px solid var(--edge-strong);border-radius:25px;color:white;padding:10px 20px;background:transparent;cursor:pointer}
+.uni-more:hover{border-color:var(--amber)}
+@media(max-width:980px){.uni-archive-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.uni-archive-grid{grid-template-columns:1fr}.uni-explorer{padding-top:34px}.uni-search-label input{font-size:16px}.uni-archive-card{min-height:150px}}
+
 /* approach */
 .approach-grid{display:grid;grid-template-columns:1fr 1fr;gap:90px;align-items:start}
 .approach h2{margin-bottom:24px;max-width:10em}
@@ -803,6 +837,20 @@ section.universe{background:radial-gradient(ellipse 62% 52% at 50% 58%,rgba(22,9
     <div class="uni-stage" id="uniStage" role="group" aria-label="Interactive project globe. Drag to rotate, or use Tab to move between projects.">
       <div class="uni-orb" aria-hidden="true"></div>
       <canvas class="uni-canvas" id="uniCanvas" aria-hidden="true"></canvas>
+    </div>
+    <div class="uni-explorer" id="uniExplorer" aria-labelledby="uniExplorerTitle">
+      <div class="uni-explorer-top">
+        <div><p class="uni-eyebrow">THE COMPLETE PICTURE</p><h3 id="uniExplorerTitle">Explore the engineering archive<span class="uni-count" id="uniArchiveCount"></span></h3>
+          <p>Production applications, open-source packages, hardware builds, game projects and engineering experiments. Filter by discipline or search the entire collection.</p></div>
+        <a class="uni-gh-link" href="https://github.com/Frankline-Sable?tab=repositories" target="_blank" rel="noopener noreferrer">All GitHub repositories ↗</a>
+      </div>
+      <div class="uni-explorer-controls">
+        <label class="uni-search-label" for="uniSearch"><span aria-hidden="true">⌕</span><input id="uniSearch" type="search" placeholder="Search projects, languages, technologies…" autocomplete="off" aria-label="Search portfolio projects"></label>
+        <div class="uni-filters" id="uniFilters" role="group" aria-label="Filter projects by category"></div>
+      </div>
+      <p class="uni-archive-status" id="uniArchiveStatus" aria-live="polite"></p>
+      <div class="uni-archive-grid" id="uniArchiveGrid"></div>
+      <div class="uni-archive-foot"><button class="uni-more" id="uniMore" type="button" hidden>Show more projects ↓</button><span id="uniGithubStatus">Curated work · GitHub repository discovery loads automatically when available.</span></div>
     </div>
     <noscript><p style="text-align:center;color:#b3cbd9;margin-top:24px">The interactive globe needs JavaScript. The projects above under “Work that moved beyond the editor” cover the highlights.</p></noscript>
   </div>
@@ -1361,90 +1409,647 @@ new IntersectionObserver(function(en,io){if(en[0].isIntersecting){$('#term').cla
   "threeUrl": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
   "projects": [
     {
-      "id": "pesa-radar", "name": "Pesa Radar", "tag": "Flutter · Fintech", "icon": "wallet", "colors": ["#4c8a6c", "#143a3a"],
+      "id": "pesa-radar",
+      "name": "Pesa Radar",
+      "tag": "Flutter · Fintech",
+      "icon": "wallet",
+      "colors": [
+        "#4c8a6c",
+        "#143a3a"
+      ],
       "description": "An offline-first Android finance app turning M-PESA and banking SMS into useful financial insight, with on-device parsing and encrypted backup.",
-      "highlights": ["SMS parsing engine", "Offline-first architecture", "Secure backup"],
-      "stack": ["Flutter", "Hive", "Firebase"],
-      "meta": [["Type", "Independent product"]],
+      "highlights": [
+        "SMS parsing engine",
+        "Offline-first architecture",
+        "Secure backup"
+      ],
+      "stack": [
+        "Flutter",
+        "Hive",
+        "Firebase"
+      ],
+      "meta": [
+        [
+          "Type",
+          "Independent product"
+        ]
+      ],
       "image": null,
-      "links": [{"label": "Open on Google Play", "url": "https://play.google.com/store/apps/details?id=com.sable.pesa_radar"}]
+      "links": [
+        {
+          "label": "Open on Google Play",
+          "url": "https://play.google.com/store/apps/details?id=com.sable.pesa_radar"
+        }
+      ],
+      "category": "Mobile & Full-Stack",
+      "featured": true
     },
     {
-      "id": "smartrunning", "name": "SmartRunning", "tag": "Flutter · Wearables · FastAPI", "icon": "watch", "colors": ["#b4604f", "#3a2a45"],
+      "id": "smartrunning",
+      "name": "SmartRunning",
+      "tag": "Flutter · Wearables · FastAPI",
+      "icon": "watch",
+      "colors": [
+        "#b4604f",
+        "#3a2a45"
+      ],
       "description": "Training experiences shaped by activity data. I’ve worked on watch integrations, workout synchronization, mobile flows, and backend/cloud delivery.",
-      "highlights": ["Wearable APIs", "Training plan sync", "GCP pipelines"],
-      "stack": ["FastAPI", "Flutter", "GCP"],
-      "meta": [["Type", "Professional project, Elewa"]],
+      "highlights": [
+        "Wearable APIs",
+        "Training plan sync",
+        "GCP pipelines"
+      ],
+      "stack": [
+        "FastAPI",
+        "Flutter",
+        "GCP"
+      ],
+      "meta": [
+        [
+          "Type",
+          "Professional project, Elewa"
+        ]
+      ],
       "image": null,
-      "links": []
+      "links": [],
+      "category": "Mobile & Full-Stack",
+      "featured": true
     },
     {
-      "id": "farmbetter", "name": "FarmBetter", "tag": "Flutter · AgriTech", "icon": "leaf", "colors": ["#6f9a62", "#1f3a2c"],
+      "id": "farmbetter",
+      "name": "FarmBetter",
+      "tag": "Flutter · AgriTech",
+      "icon": "leaf",
+      "colors": [
+        "#6f9a62",
+        "#1f3a2c"
+      ],
       "description": "Agricultural advisory tools built for agents and farmers across 10+ countries, including workflows where connectivity cannot be taken for granted.",
-      "highlights": ["100K+ users", "10+ countries", "Offline-minded delivery"],
-      "stack": ["Flutter", "Angular", "GraphQL"],
-      "meta": [["Type", "Professional project, Elewa"]],
+      "highlights": [
+        "100K+ users",
+        "10+ countries",
+        "Offline-minded delivery"
+      ],
+      "stack": [
+        "Flutter",
+        "Angular",
+        "GraphQL"
+      ],
+      "meta": [
+        [
+          "Type",
+          "Professional project, Elewa"
+        ]
+      ],
       "image": null,
-      "links": []
+      "links": [],
+      "category": "Mobile & Full-Stack",
+      "featured": true
     },
     {
-      "id": "myblueprint", "name": "MyBlueprint", "tag": "Flutter · Productivity", "icon": "target", "colors": ["#4d82b6", "#26325e"],
+      "id": "myblueprint",
+      "name": "MyBlueprint",
+      "tag": "Flutter · Productivity",
+      "icon": "target",
+      "colors": [
+        "#4d82b6",
+        "#26325e"
+      ],
       "description": "A personal growth platform connecting habits, goals and roadmaps, built and shipped across mobile platforms with 30,000+ users.",
-      "highlights": ["30K+ users", "Habit and goal tracking", "Cross-platform releases"],
-      "stack": ["Flutter", "Node.js", "Firebase"],
-      "meta": [["Type", "Professional project, Elewa"]],
+      "highlights": [
+        "30K+ users",
+        "Habit and goal tracking",
+        "Cross-platform releases"
+      ],
+      "stack": [
+        "Flutter",
+        "Node.js",
+        "Firebase"
+      ],
+      "meta": [
+        [
+          "Type",
+          "Professional project, Elewa"
+        ]
+      ],
       "image": null,
-      "links": []
+      "links": [],
+      "category": "Mobile & Full-Stack",
+      "featured": true
     },
     {
-      "id": "pulse-watch", "name": "Pulse Watch", "tag": "Go · Monitoring", "icon": "pulse", "colors": ["#2f9fb3", "#12364a"],
-      "description": "",
-      "highlights": [],
-      "stack": ["Go"],
-      "meta": [],
+      "id": "pulse-watch",
+      "name": "Pulse Watch",
+      "tag": "Go · Monitoring",
+      "icon": "pulse",
+      "colors": [
+        "#2f9fb3",
+        "#12364a"
+      ],
+      "description": "A Go-based uptime monitoring service using PostgreSQL to persist monitored endpoints and check results. An evolving backend engineering project.",
+      "highlights": [
+        "Scheduled uptime checks",
+        "PostgreSQL persistence",
+        "Containerized local development"
+      ],
+      "stack": [
+        "Go",
+        "PostgreSQL",
+        "Docker"
+      ],
+      "meta": [
+        [
+          "Type",
+          "Personal engineering project"
+        ]
+      ],
       "image": null,
-      "links": []
+      "links": [],
+      "category": "Backend & Cloud",
+      "featured": true
     },
     {
-      "id": "url-shortener", "name": "URL Shortener", "tag": "Go · Backend", "icon": "link", "colors": ["#5e79c9", "#1d2e5a"],
-      "description": "",
-      "highlights": [],
-      "stack": ["Go"],
-      "meta": [],
+      "id": "url-shortener",
+      "name": "URL Shortener",
+      "tag": "Go · Backend",
+      "icon": "link",
+      "colors": [
+        "#5e79c9",
+        "#1d2e5a"
+      ],
+      "description": "A Go URL-shortening service with HTTP endpoints for creating short links and redirecting visitors, developed with concurrency safety and container packaging.",
+      "highlights": [
+        "HTTP API and redirect routing",
+        "In-memory store with RWMutex",
+        "Docker and GitHub Actions"
+      ],
+      "stack": [
+        "Go",
+        "Docker",
+        "GitHub Actions"
+      ],
+      "meta": [
+        [
+          "Type",
+          "Personal engineering project"
+        ]
+      ],
       "image": null,
-      "links": []
+      "links": [],
+      "category": "Backend & Cloud",
+      "featured": true
     },
     {
-      "id": "traffic-light", "name": "Density-Based Traffic Light", "short": "Traffic Light", "tag": "IoT · Embedded Systems", "icon": "traffic", "colors": ["#c9893a", "#4a2f1a"],
+      "id": "traffic-light",
+      "name": "Density-Based Traffic Light",
+      "short": "Traffic Light",
+      "tag": "IoT · Embedded Systems",
+      "icon": "traffic",
+      "colors": [
+        "#c9893a",
+        "#4a2f1a"
+      ],
       "description": "A prototype circuit for a four-way intersection (roundabout) traffic light system. Infrared sensors detect the presence of vehicles, and a timing system works with them. A microcontroller sits at the heart of the circuit and coordinates all the activity.",
-      "highlights": ["Infrared vehicle detection", "Density-based signal timing", "Microcontroller coordination"],
-      "stack": ["Microcontroller", "Infrared sensors"],
-      "meta": [["Client", "School project"], ["Date", "28 Aug 2018"], ["Work", "Hardware"]],
+      "highlights": [
+        "Infrared vehicle detection",
+        "Density-based signal timing",
+        "Microcontroller coordination"
+      ],
+      "stack": [
+        "Microcontroller",
+        "Infrared sensors"
+      ],
+      "meta": [
+        [
+          "Client",
+          "School project"
+        ],
+        [
+          "Date",
+          "28 Aug 2018"
+        ],
+        [
+          "Work",
+          "Hardware"
+        ]
+      ],
       "image": "images/hardware/traffic.png",
-      "links": [{"label": "Watch the demo", "url": "https://www.youtube.com/watch?v=vrDAZCiytRA"}]
+      "links": [
+        {
+          "label": "Watch the demo",
+          "url": "https://www.youtube.com/watch?v=vrDAZCiytRA"
+        }
+      ],
+      "category": "IoT & Electronics",
+      "featured": true
     },
     {
-      "id": "anarchy", "name": "Anarchy", "tag": "Unity · Game Development", "icon": "sword", "colors": ["#8a4b3f", "#2a1f33"],
+      "id": "anarchy",
+      "name": "Anarchy",
+      "tag": "Unity · Game Development",
+      "icon": "sword",
+      "colors": [
+        "#8a4b3f",
+        "#2a1f33"
+      ],
       "description": "Anarchy 2D is a 2D adventure game set in medieval times. The player is a knight on a mission to rescue a princess captured by enemies.",
-      "highlights": ["Backend engine and game development", "Published on Google Play"],
-      "stack": ["Unity", "C#", "SQLite"],
-      "meta": [["Client", "Creators Galaxy"], ["Date", "20 Oct 2019"], ["Work", "Game, design"]],
+      "highlights": [
+        "Backend engine and game development",
+        "Published on Google Play"
+      ],
+      "stack": [
+        "Unity",
+        "C#",
+        "SQLite"
+      ],
+      "meta": [
+        [
+          "Client",
+          "Creators Galaxy"
+        ],
+        [
+          "Date",
+          "20 Oct 2019"
+        ],
+        [
+          "Work",
+          "Game, design"
+        ]
+      ],
       "image": "images/gaming/anarchy.png",
       "links": [
-        {"label": "Get it on Google Play", "url": "https://play.google.com/store/apps/details?id=com.CreatorsGalaxy.Anarchy&hl=en&gl=US"},
-        {"label": "Watch the video", "url": "https://www.youtube.com/watch?v=LEJs0skovc8"}
+        {
+          "label": "Get it on Google Play",
+          "url": "https://play.google.com/store/apps/details?id=com.CreatorsGalaxy.Anarchy&hl=en&gl=US"
+        },
+        {
+          "label": "Watch the video",
+          "url": "https://www.youtube.com/watch?v=LEJs0skovc8"
+        }
+      ],
+      "category": "Games & 3D",
+      "featured": true
+    },
+    {
+      "id": "grudge-guess",
+      "name": "Grudge Guess",
+      "tag": "Unity · Mobile Games",
+      "icon": "cards",
+      "colors": [
+        "#7b5ea7",
+        "#251a40"
+      ],
+      "description": "A card game meant to test your memory in a fun way. Matching cards has never been this challenging, or this fun.",
+      "highlights": [
+        "Memory card gameplay",
+        "Published on Google Play"
+      ],
+      "stack": [
+        "Unity",
+        "C#",
+        "SQLite"
+      ],
+      "meta": [
+        [
+          "Client",
+          "Creators Galaxy"
+        ]
+      ],
+      "image": "images/gaming/gg.png",
+      "links": [
+        {
+          "label": "Get it on Google Play",
+          "url": "https://play.google.com/store/apps/details?id=com.CreatorsGalaxy.GrudgeGuess&hl=en&gl=US"
+        }
+      ],
+      "category": "Games & 3D",
+      "featured": true
+    },
+    {
+      "id": "arc-progress",
+      "name": "Arc Progress Bar",
+      "category": "Open Source",
+      "featured": false,
+      "tag": "Flutter · Package",
+      "icon": "target",
+      "colors": [
+        "#377b9b",
+        "#132c48"
+      ],
+      "description": "An open-source Flutter package for animated, customizable semicircular progress bars.",
+      "highlights": [
+        "Custom Painter",
+        "Configurable arcs",
+        "Animation"
+      ],
+      "stack": [
+        "Flutter",
+        "Dart"
+      ],
+      "meta": [
+        [
+          "Type",
+          "Public repository"
+        ]
+      ],
+      "image": null,
+      "links": [
+        {
+          "label": "View repository",
+          "url": "https://github.com/Frankline-Sable/arc_progress_bar"
+        }
       ]
     },
     {
-      "id": "grudge-guess", "name": "Grudge Guess", "tag": "Unity · Mobile Games", "icon": "cards", "colors": ["#7b5ea7", "#251a40"],
-      "description": "A card game meant to test your memory in a fun way. Matching cards has never been this challenging, or this fun.",
-      "highlights": ["Memory card gameplay", "Published on Google Play"],
-      "stack": ["Unity", "C#", "SQLite"],
-      "meta": [["Client", "Creators Galaxy"]],
-      "image": "images/gaming/gg.png",
-      "links": [{"label": "Get it on Google Play", "url": "https://play.google.com/store/apps/details?id=com.CreatorsGalaxy.GrudgeGuess&hl=en&gl=US"}]
+      "id": "progression-tree",
+      "name": "Progression Tree Map",
+      "category": "Open Source",
+      "featured": false,
+      "tag": "Flutter · Visualization",
+      "icon": "target",
+      "colors": [
+        "#377b9b",
+        "#132c48"
+      ],
+      "description": "An open-source Flutter widget library for visualizing hierarchical progression maps and connected nodes.",
+      "highlights": [
+        "Tree node layouts",
+        "Customizable rendering"
+      ],
+      "stack": [
+        "Flutter",
+        "Dart"
+      ],
+      "meta": [
+        [
+          "Type",
+          "Public repository"
+        ]
+      ],
+      "image": null,
+      "links": [
+        {
+          "label": "View repository",
+          "url": "https://github.com/Frankline-Sable/progression_tree_map"
+        }
+      ]
+    },
+    {
+      "id": "water-level",
+      "name": "8051 Water Level Indicator",
+      "category": "IoT & Electronics",
+      "featured": false,
+      "tag": "8051 · Embedded C",
+      "icon": "traffic",
+      "colors": [
+        "#bc8844",
+        "#46301f"
+      ],
+      "description": "A water tank level monitor built with an 8051 microcontroller, LCD display, alarm and motor shutoff logic.",
+      "highlights": [
+        "Water level sensing",
+        "Automated motor shutdown"
+      ],
+      "stack": [
+        "8051",
+        "Embedded C",
+        "Proteus"
+      ],
+      "meta": [
+        [
+          "Type",
+          "Public repository"
+        ]
+      ],
+      "image": null,
+      "links": [
+        {
+          "label": "View repository",
+          "url": "https://github.com/Frankline-Sable/Water-Level-Indicator-8051-Micro-controller-"
+        }
+      ]
+    },
+    {
+      "id": "binary-adder",
+      "name": "4-Bit Adder & Subtractor",
+      "category": "IoT & Electronics",
+      "featured": false,
+      "tag": "Digital Logic · Circuits",
+      "icon": "traffic",
+      "colors": [
+        "#bc8844",
+        "#46301f"
+      ],
+      "description": "Digital electronics project exploring wire-level implementation of binary addition and subtraction.",
+      "highlights": [
+        "Combinational logic",
+        "Arithmetic circuits"
+      ],
+      "stack": [
+        "Digital Logic"
+      ],
+      "meta": [
+        [
+          "Type",
+          "Public repository"
+        ]
+      ],
+      "image": null,
+      "links": [
+        {
+          "label": "View repository",
+          "url": "https://github.com/Frankline-Sable/4-Bit-Binary-Adder-and-Subtractor-Wire-Connections"
+        }
+      ]
+    },
+    {
+      "id": "full-adder",
+      "name": "Multiplexer Full Adder",
+      "category": "IoT & Electronics",
+      "featured": false,
+      "tag": "Digital Logic · 74LS",
+      "icon": "traffic",
+      "colors": [
+        "#bc8844",
+        "#46301f"
+      ],
+      "description": "A full-adder circuit using 74LS-series multiplexer ICs to implement digital arithmetic logic.",
+      "highlights": [
+        "Multiplexer logic",
+        "Circuit design"
+      ],
+      "stack": [
+        "Digital Electronics"
+      ],
+      "meta": [
+        [
+          "Type",
+          "Public repository"
+        ]
+      ],
+      "image": null,
+      "links": [
+        {
+          "label": "View repository",
+          "url": "https://github.com/Frankline-Sable/Full-Adder-Circuit-With-74LS157-74LS151-74LS153"
+        }
+      ]
+    },
+    {
+      "id": "university-portal",
+      "name": "University Portal Login",
+      "category": "Backend & Cloud",
+      "featured": false,
+      "tag": "Java · Swing · SQL",
+      "icon": "link",
+      "colors": [
+        "#377b9b",
+        "#132c48"
+      ],
+      "description": "A Java desktop login and registration interface connected to a SQL-backed university portal.",
+      "highlights": [
+        "Authentication flows",
+        "Database integration"
+      ],
+      "stack": [
+        "Java",
+        "Swing",
+        "SQL"
+      ],
+      "meta": [
+        [
+          "Type",
+          "Public repository"
+        ]
+      ],
+      "image": null,
+      "links": [
+        {
+          "label": "View repository",
+          "url": "https://github.com/Frankline-Sable/University-Portal-Signup-and-Login"
+        }
+      ]
+    },
+    {
+      "id": "bottom-menu",
+      "name": "Animatable Bottom Pop Menu",
+      "category": "Open Source",
+      "featured": false,
+      "tag": "Flutter · UI",
+      "icon": "target",
+      "colors": [
+        "#377b9b",
+        "#132c48"
+      ],
+      "description": "An animated bottom-menu component for Flutter, built as reusable UI work.",
+      "highlights": [
+        "UI interaction",
+        "Reusable component"
+      ],
+      "stack": [
+        "Flutter",
+        "Dart"
+      ],
+      "meta": [
+        [
+          "Type",
+          "Project / engineering work"
+        ]
+      ],
+      "image": null,
+      "links": []
+    },
+    {
+      "id": "nfc",
+      "name": "NFC App Integration",
+      "category": "Mobile & Full-Stack",
+      "featured": false,
+      "tag": "Flutter · NFC",
+      "icon": "watch",
+      "colors": [
+        "#377b9b",
+        "#132c48"
+      ],
+      "description": "An NFC integration feature developed for a mobile application.",
+      "highlights": [
+        "NFC interactions",
+        "Mobile platform integration"
+      ],
+      "stack": [
+        "Flutter",
+        "NFC"
+      ],
+      "meta": [
+        [
+          "Type",
+          "Project / engineering work"
+        ]
+      ],
+      "image": null,
+      "links": []
+    },
+    {
+      "id": "garmin",
+      "name": "Garmin Connect IQ Integration",
+      "category": "Mobile & Full-Stack",
+      "featured": false,
+      "tag": "Flutter · Garmin",
+      "icon": "watch",
+      "colors": [
+        "#377b9b",
+        "#132c48"
+      ],
+      "description": "Wearable-device integration work, including communication between a Flutter application and Garmin smartwatch experiences.",
+      "highlights": [
+        "Device connectivity",
+        "Workout syncing"
+      ],
+      "stack": [
+        "Flutter",
+        "Garmin Connect IQ"
+      ],
+      "meta": [
+        [
+          "Type",
+          "Project / engineering work"
+        ]
+      ],
+      "image": null,
+      "links": []
+    },
+    {
+      "id": "k8s-lab",
+      "name": "Kubernetes Deployment Lab",
+      "category": "Backend & Cloud",
+      "featured": false,
+      "tag": "Kubernetes · Docker",
+      "icon": "pulse",
+      "colors": [
+        "#377b9b",
+        "#132c48"
+      ],
+      "description": "Hands-on cloud-native exercises covering deployments, rolling updates, health probes and service routing.",
+      "highlights": [
+        "Deployments and Services",
+        "Readiness/liveness probes",
+        "Rollbacks"
+      ],
+      "stack": [
+        "Kubernetes",
+        "Docker",
+        "minikube"
+      ],
+      "meta": [
+        [
+          "Type",
+          "Project / engineering work"
+        ]
+      ],
+      "image": null,
+      "links": []
     }
-  ]
+  ],
+  "githubUser": "Frankline-Sable"
 }
 </script>
 
@@ -1461,7 +2066,7 @@ var root=document.getElementById('universe');
 if(!root)return;
 var dataEl=document.getElementById('universe-data'),DATA;
 try{DATA=JSON.parse(dataEl.textContent)}catch(err){console.error('[universe] bad project data',err);return}
-var P=DATA.projects||[];
+var P=(DATA.projects||[]).filter(function(p){return p.featured!==false});
 if(!P.length)return;
 
 var ac=new AbortController(),sig={signal:ac.signal};
@@ -1505,6 +2110,44 @@ var cards=P.map(function(p,i){
   w.appendChild(b);stage.appendChild(w);
   return {i:i,p:p,w:w,b:b,dir:[Math.cos(th)*r,y,Math.sin(th)*r],back:null,hot:false,z:0,glow:0};
 });
+
+/* ---------- full searchable archive ---------- */
+var archiveItems=(DATA.projects||[]).slice(),archiveFilter='All',archiveQuery='',archiveLimit=9;
+var archiveRoot=$('#uniArchiveGrid'),filterRoot=$('#uniFilters'),searchInput=$('#uniSearch'),archiveStatus=$('#uniArchiveStatus'),archiveCount=$('#uniArchiveCount'),moreBtn=$('#uniMore'),githubStatus=$('#uniGithubStatus');
+function archiveKey(p){return String(p.name||'').trim().toLowerCase().replace(/[^a-z0-9]+/g,'-')}
+function archiveCategories(){return ['All','Mobile & Full-Stack','Backend & Cloud','IoT & Electronics','Open Source','Games & 3D','Other']}
+function renderFilters(){filterRoot.innerHTML='';archiveCategories().forEach(function(cat){if(cat!=='All'&&!archiveItems.some(function(p){return p.category===cat}))return;
+ var btn=document.createElement('button');btn.type='button';btn.className='uni-filter';btn.textContent=cat;btn.setAttribute('aria-pressed',String(cat===archiveFilter));btn.addEventListener('click',function(){archiveFilter=cat;archiveLimit=9;renderFilters();renderArchive()});filterRoot.appendChild(btn)})}
+function filteredArchive(){var q=archiveQuery.toLowerCase().trim();return archiveItems.filter(function(p){return (archiveFilter==='All'||p.category===archiveFilter)&&(!q||[p.name,p.description,p.tag,p.category].concat(p.stack||[]).join(' ').toLowerCase().includes(q))})}
+function renderArchive(){var filtered=filteredArchive();archiveRoot.replaceChildren();var fragment=document.createDocumentFragment();filtered.slice(0,archiveLimit).forEach(function(p){
+ var el=document.createElement('button');el.type='button';el.className='uni-archive-card';
+ var top=document.createElement('div');top.className='uni-archive-card-top';var kind=document.createElement('span');kind.textContent=p.category||'Other';var arrow=document.createElement('span');arrow.textContent='↗';top.append(kind,arrow);
+ var heading=document.createElement('strong');heading.textContent=p.name;var summary=document.createElement('p');summary.textContent=p.description||p.tag||'Explore the project.';
+ var tags=document.createElement('div');tags.className='uni-archive-tags';(p.stack||[]).slice(0,3).forEach(function(t){var item=document.createElement('span');item.textContent=t;tags.appendChild(item)});
+ el.append(top,heading,summary,tags);el.addEventListener('click',function(){var idx=P.findIndex(function(c){return c.id===p.id});if(idx>=0){openPanel(idx,el)}else{openArchivePanel(p,el)}});fragment.appendChild(el)
+});archiveRoot.appendChild(fragment);archiveStatus.textContent=filtered.length+' project'+(filtered.length===1?'':'s')+' found';archiveCount.textContent=archiveItems.length+' projects';moreBtn.hidden=filtered.length<=archiveLimit}
+moreBtn.addEventListener('click',function(){archiveLimit+=9;renderArchive()},sig);
+searchInput.addEventListener('input',function(){archiveQuery=searchInput.value;archiveLimit=9;renderArchive()},sig);
+renderFilters();renderArchive();
+function categoryFromRepo(repo){var str=[repo.name,repo.description,(repo.topics||[]).join(' '),repo.language].join(' ').toLowerCase();
+ if(/flutter|dart|android|mobile|nfc/.test(str))return /package|widget|plugin|library|component/.test(str)?'Open Source':'Mobile & Full-Stack';
+ if(/iot|arduino|8051|hardware|circuit|traffic|sensor|microcontroller|electronic/.test(str))return 'IoT & Electronics';
+ if(/unity|game|blender|3d/.test(str))return 'Games & 3D';
+ if(/go|python|fastapi|docker|kubernetes|backend|api|server|cloud|devops/.test(str))return 'Backend & Cloud';return 'Other'}
+function getRepos(page){return fetch('https://api.github.com/users/'+encodeURIComponent(DATA.githubUser)+'/repos?per_page=100&page='+page+'&sort=updated',{headers:{Accept:'application/vnd.github+json'}}).then(function(r){if(!r.ok)throw new Error('GitHub request failed: '+r.status);return r.json()})}
+if(DATA.githubUser){getRepos(1).then(function(repos){
+ var incoming=repos.filter(function(r){return !r.fork&&!r.archived&&!r.private&&r.name&&!/^(?:frankline-sable\.github\.io)$/.test(r.name.toLowerCase())});
+ var known=new Set(archiveItems.map(archiveKey));var added=0;
+ incoming.forEach(function(r){var key=archiveKey({name:r.name});if(known.has(key))return;known.add(key);added++;
+ archiveItems.push({id:'gh-'+r.id,name:r.name.replace(/[-_]+/g,' '),category:categoryFromRepo(r),featured:false,tag:[r.language,'GitHub repository'].filter(Boolean).join(' · '),description:r.description||'Public GitHub repository. Open the source to explore the implementation.',stack:[r.language].filter(Boolean),highlights:[],meta:[['Type','Public GitHub repository']],icon:'link',colors:['#2d7c9c','#153047'],links:[{label:'View repository',url:r.html_url}]})});
+ githubStatus.textContent='GitHub synced · '+added+' additional public repositories discovered'+(repos.length===100?' (first 100; open GitHub for the full list)':'');renderFilters();renderArchive()
+ }).catch(function(){githubStatus.textContent='Offline-friendly curated archive · Browse every public repository on GitHub ↗'})}
+function openArchivePanel(p,from){lastFocus=from||document.activeElement;S.open=P.length;fillArchive(p);modal.inert=false;modal.classList.add('open');lockScroll(true);
+ $('#uniPrev').hidden=true;$('#uniNext').hidden=true;setTimeout(function(){$('.uni-close',modal).focus({preventScroll:true})},30)}
+function fillArchive(p){var c=p.colors||[];hero.style.setProperty('--g1',c[0]||'#377b9b');hero.style.setProperty('--g2',c[1]||'#132c48');hero.innerHTML=icon(p.icon||'link');tagEl.textContent=p.tag||p.category;titleEl.textContent=p.name;descEl.textContent=p.description||'Explore the source repository for implementation details.';
+ extra.innerHTML='';if(p.highlights&&p.highlights.length)extra.innerHTML+='<p class="uni-sub">Highlights</p><ul class="uni-list">'+p.highlights.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul>';
+ if(p.stack&&p.stack.length)extra.innerHTML+='<p class="uni-sub">Built with</p><div class="uni-chips">'+p.stack.map(function(x){return '<span>'+esc(x)+'</span>'}).join('')+'</div>';
+ linksEl.innerHTML=(p.links||[]).filter(function(l){return /^https:\/\//.test(l.url)}).map(function(l){return '<a class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="'+esc(l.url)+'">'+esc(l.label)+' ↗</a>'}).join('');countEl.textContent='From project archive';scrollEl.scrollTop=0}
 
 /* ---------- state ---------- */
 var S={yaw:0.5,pitch:REST_PITCH,yawVel:0,autoMix:1,hoverMix:0,hot:-1,kf:-1,open:-1,dragging:false,focus:null,
@@ -1823,6 +2466,7 @@ function select(i){
 function openPanel(i,from){
   if(S.open<0)lastFocus=from||document.activeElement;
   select(i);fill(i);focusTo(i);
+  $('#uniPrev').hidden=false;$('#uniNext').hidden=false;
   modal.inert=false;modal.classList.add('open');lockScroll(true);
   setTimeout(function(){$('.uni-close',modal).focus({preventScroll:true})},30);
 }
@@ -1831,7 +2475,7 @@ function closePanel(){
   var wasOpen=S.open;
   modal.classList.remove('open');modal.inert=true;lockScroll(false);
   select(-1);S.open=-1;S.idleAt=performance.now();S.dirty=true;
-  var back=lastFocus&&document.contains(lastFocus)?lastFocus:cards[wasOpen].b;
+  var back=lastFocus&&document.contains(lastFocus)?lastFocus:(cards[wasOpen]&&cards[wasOpen].b);
   if(back)back.focus({preventScroll:true});
   lastFocus=null;
 }
