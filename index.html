@@ -1,6 +1,42 @@
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
+<!-- Google Analytics 4: Portfolio -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HCJGPJF58R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-HCJGPJF58R');
+
+  // Keep tracking isolated so interactive portfolio features still work
+  // if analytics is blocked by the visitor's browser.
+  function portfolioTrack(name, parameters) {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', name, parameters || {});
+    }
+  }
+
+  document.addEventListener('click', function(event) {
+    var anchor = event.target.closest('a[href]');
+    if (!anchor) return;
+    var href = anchor.getAttribute('href') || '';
+    var label = (anchor.textContent || '').trim().slice(0, 100);
+    if (href.startsWith('mailto:')) {
+      portfolioTrack('contact_click', {contact_method: 'email', link_text: label});
+    } else if (/\.(pdf|docx?)(?:[?#]|$)/i.test(href) || /(?:resume|cv)[-_ .]?(?:download)?/i.test(label)) {
+      portfolioTrack('resume_download', {file_name: href.split('/').pop()});
+    } else if (/^https?:\/\//i.test(href)) {
+      var url;
+      try { url = new URL(href, window.location.href); } catch (_) { return; }
+      if (url.hostname === 'github.com') {
+        portfolioTrack('github_click', {link_url: url.href, link_text: label});
+      } else if (url.origin !== window.location.origin) {
+        portfolioTrack('outbound_link_click', {link_url: url.href, link_text: label});
+      }
+    }
+  }, {capture: true});
+</script>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Frankline Sable | Software Engineer — Backend &amp; Full-Stack</title>
@@ -2117,7 +2153,7 @@ var archiveRoot=$('#uniArchiveGrid'),filterRoot=$('#uniFilters'),searchInput=$('
 function archiveKey(p){return String(p.name||'').trim().toLowerCase().replace(/[^a-z0-9]+/g,'-')}
 function archiveCategories(){return ['All','Mobile & Full-Stack','Backend & Cloud','IoT & Electronics','Open Source','Games & 3D','Other']}
 function renderFilters(){filterRoot.innerHTML='';archiveCategories().forEach(function(cat){if(cat!=='All'&&!archiveItems.some(function(p){return p.category===cat}))return;
- var btn=document.createElement('button');btn.type='button';btn.className='uni-filter';btn.textContent=cat;btn.setAttribute('aria-pressed',String(cat===archiveFilter));btn.addEventListener('click',function(){archiveFilter=cat;archiveLimit=9;renderFilters();renderArchive()});filterRoot.appendChild(btn)})}
+ var btn=document.createElement('button');btn.type='button';btn.className='uni-filter';btn.textContent=cat;btn.setAttribute('aria-pressed',String(cat===archiveFilter));btn.addEventListener('click',function(){archiveFilter=cat;archiveLimit=9;renderFilters();renderArchive();portfolioTrack('project_filter',{project_category:cat})});filterRoot.appendChild(btn)})}
 function filteredArchive(){var q=archiveQuery.toLowerCase().trim();return archiveItems.filter(function(p){return (archiveFilter==='All'||p.category===archiveFilter)&&(!q||[p.name,p.description,p.tag,p.category].concat(p.stack||[]).join(' ').toLowerCase().includes(q))})}
 function renderArchive(){var filtered=filteredArchive();archiveRoot.replaceChildren();var fragment=document.createDocumentFragment();filtered.slice(0,archiveLimit).forEach(function(p){
  var el=document.createElement('button');el.type='button';el.className='uni-archive-card';
@@ -2142,7 +2178,7 @@ if(DATA.githubUser){getRepos(1).then(function(repos){
  archiveItems.push({id:'gh-'+r.id,name:r.name.replace(/[-_]+/g,' '),category:categoryFromRepo(r),featured:false,tag:[r.language,'GitHub repository'].filter(Boolean).join(' · '),description:r.description||'Public GitHub repository. Open the source to explore the implementation.',stack:[r.language].filter(Boolean),highlights:[],meta:[['Type','Public GitHub repository']],icon:'link',colors:['#2d7c9c','#153047'],links:[{label:'View repository',url:r.html_url}]})});
  githubStatus.textContent='GitHub synced · '+added+' additional public repositories discovered'+(repos.length===100?' (first 100; open GitHub for the full list)':'');renderFilters();renderArchive()
  }).catch(function(){githubStatus.textContent='Offline-friendly curated archive · Browse every public repository on GitHub ↗'})}
-function openArchivePanel(p,from){lastFocus=from||document.activeElement;S.open=P.length;fillArchive(p);modal.inert=false;modal.classList.add('open');lockScroll(true);
+function openArchivePanel(p,from){portfolioTrack('project_view',{project_name:p.name,project_category:p.category||'Other',project_source:'archive'});lastFocus=from||document.activeElement;S.open=P.length;fillArchive(p);modal.inert=false;modal.classList.add('open');lockScroll(true);
  $('#uniPrev').hidden=true;$('#uniNext').hidden=true;setTimeout(function(){$('.uni-close',modal).focus({preventScroll:true})},30)}
 function fillArchive(p){var c=p.colors||[];hero.style.setProperty('--g1',c[0]||'#377b9b');hero.style.setProperty('--g2',c[1]||'#132c48');hero.innerHTML=icon(p.icon||'link');tagEl.textContent=p.tag||p.category;titleEl.textContent=p.name;descEl.textContent=p.description||'Explore the source repository for implementation details.';
  extra.innerHTML='';if(p.highlights&&p.highlights.length)extra.innerHTML+='<p class="uni-sub">Highlights</p><ul class="uni-list">'+p.highlights.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul>';
@@ -2357,7 +2393,7 @@ function setGrid(on,forced){
   viewBtn.hidden=forced&&S.failed;
   syncLoop();
 }
-viewBtn.addEventListener('click',function(){setGrid(!S.grid,false)},sig);
+viewBtn.addEventListener('click',function(){portfolioTrack('universe_view_toggle',{view:S.grid?'globe':'list'});setGrid(!S.grid,false)},sig);
 
 /* ---------- visibility ---------- */
 var io=new IntersectionObserver(function(en){
@@ -2464,6 +2500,7 @@ function select(i){
   cards.forEach(function(c){c.w.classList.toggle('is-selected',c.i===i)});
 }
 function openPanel(i,from){
+  portfolioTrack('project_view',{project_name:P[i].name,project_category:P[i].category||'Featured',project_source:'globe'});
   if(S.open<0)lastFocus=from||document.activeElement;
   select(i);fill(i);focusTo(i);
   $('#uniPrev').hidden=false;$('#uniNext').hidden=false;
